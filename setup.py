@@ -6,15 +6,14 @@ from torch.utils import cpp_extension
 ext_t = cpp_extension.CppExtension
 ext_fnames = ['rpe_index_cpp/cpp_src/rpe_index.cpp']
 define_macros = []
-extra_compile_args = dict(cxx=['-fopenmp', '-O3'],
-                          nvcc=['-O3'])
+extra_compile_args = dict(cxx=['-fopenmp', '-O3'], nvcc=['-O3'])
 
 if torch.cuda.is_available():
     ext_t = cpp_extension.CUDAExtension
     ext_fnames.append('rpe_index_cpp/cpp_src/rpe_index_cuda.cu')
     define_macros.append(('WITH_CUDA', None))
 
-setup(name='rpe_index',
+setup(name='rpe_index_cpp',
       version="1.2.0",
       ext_modules=[ext_t(
                    'rpe_index_cpp',
